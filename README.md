@@ -26,3 +26,13 @@ CsvToMarkdown.convertCsvToMarkDown(csvLines, "\t", false);
 ```
 
 The first argument is a `String` with the CSV content, then the separator and a `boolean` parameter that determines whether the header is printed or not.
+
+## Build
+
+In order to build the project you will need to have at least Java 8 and Maven installed.
+
+The build command is:
+
+```
+mvn clean package
+```
