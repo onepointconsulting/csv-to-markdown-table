@@ -1,10 +1,10 @@
-package com.onepointltd.csvmarkdown;
+package io.github.onepointconsulting.csvmarkdown;
+
 
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,10 +40,10 @@ class CsvToMarkdownTest {
     @Test
     void whenGenerateCsvData_ShouldHaveData() {
         String csvLines = CsvProvider.createMultiline();
-        CsvToMarkdown.CsvData csvData = CsvToMarkdown.generateCsvData(csvLines, ";");
-        assertEquals(4, csvData.maxRowLen.size());
-        assertEquals(14, csvData.maxRowLen.get(3));
-        assertEquals(4, csvData.tabularData.size());
+        CsvData csvData = CsvToMarkdown.generateCsvData(csvLines, ";", true);
+        assertEquals(4, csvData.getMaxRowLen().size());
+        assertEquals(14, csvData.getMaxRowLen().get(3));
+        assertEquals(4, csvData.getTabularData().size());
     }
 
     @Test
@@ -63,5 +63,17 @@ class CsvToMarkdownTest {
         assertTrue(chunks.get(1).length() <= maxSize);
         String joined = String.join("", chunks);
         assertEquals(content.trim(), joined.trim());
+    }
+
+    @Test
+    void whenLoadComplex_ShouldHaveCorrectCsvData() throws IOException {
+        String content = CsvProvider.loadFileFromCp("csv/complex.csv");
+        assertNotNull(content);
+        CsvData csvData = CsvToMarkdown.generateCsvData(content, ",", true);
+        assertNotNull(csvData);
+        List<List<String>> tabularData = csvData.getTabularData();
+        tabularData.forEach(l -> {
+            assertEquals(4, l.size());
+        });
     }
 }

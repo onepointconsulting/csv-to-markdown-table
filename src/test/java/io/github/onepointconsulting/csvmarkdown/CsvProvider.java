@@ -1,4 +1,4 @@
-package com.onepointltd.csvmarkdown;
+package io.github.onepointconsulting.csvmarkdown;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
